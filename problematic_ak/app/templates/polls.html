@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tętno na AK{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/form/full_background.css' %}"></link>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="cover-container d-flex h-80 p-3 mx-auto flex-column">
+        <main role="main" class="inner cover">
+            <h1>Jak poniższe kursy podnoszą ci tętno?</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <!-- Obsluga blednych wartosci w formularzu -->
+                <div class="form-group">
+                    {% for field in form %}
+                    {% for err in field.errors %}
+                    <div class="alert alert-danger"><strong>{{ field.label }}:</strong> {{ err }}</div>
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.subject.label}}</p>
+                            {{ form.subject }}
+                        </div>
+                        <div class="col">
+                            <p>{{ form.pulse.label}}</p>
+                            {{ form.pulse }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.name.label}}</p>
+                            {{ form.name }}
+                        </div>
+                        <div class="col" style="text-align: center">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    data-placement="bottom"
+                                    data-toggle="popover"
+                                    title="Aby zmierzyć puls..."
+                                    data-content="Połóż palec wskazujący i środkowy na wewnętrznej stronie ręki, nad nadgarstkiem.
+                                     Uciśnij to miejsce. Spójrz na zegarek i licz puls przez 15 sekund. Gdy pomnożysz tę liczbę przez cztery, otrzymasz wartość tętna.">
+                                Jak zmierzyć puls ?
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.second_name.label}}</p>
+                            {{ form.second_name }}
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.last_name.label}}</p>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.index.label}}</p>
+                            {{ form.index }}
+                        </div>
+                        <div class="col">
+                            <p>{{ form.phone_number.label}}</p>
+                            {{ form.phone_number }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.city.label}}</p>
+                            {{ form.city }}
+                        </div>
+                        <div class="col">
+                            <p>{{ form.address.label}}</p>
+                            {{ form.address }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.email.label}}</p>
+                            {{ form.email }}
+                        </div>
+                        <div class="col">
+                            <p>{{ form.date_of_birth.label }}</p>
+                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                {{ form.date_of_birth }}
+                                <div class="input-group-append" data-target="#datetimepicker1"
+                                     data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-dark btn-block" type="submit_youth">Wyślij</button>
+            </form>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<!-- Bootstrap Form Helpers -->
+<script src="{% static 'js/bootstrap-formhelpers.min.js' %}"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<script src="{% static 'js/moment-with-locales.js' %}"></script>
+<script src="{% static 'js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            locale: 'pl',
+            format: 'YYYY-MM-DD',
+            sideBySide: true
+        });
+    });
+
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
+{% endblock %}
