@@ -11,7 +11,7 @@ def polls_view(request):
 		if form.is_valid():
 			subject_pulse = create_subject_pulse(form.cleaned_data)
 			subject_pulse.save()
-			person = create_person(form.cleaned_data)
+			person = create_person(form.cleaned_data, subject_pulse)
 			person.save()
 			return render(request, 'congratulation.html')
 		else:
